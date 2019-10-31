@@ -3,7 +3,7 @@
 
 """Helpers for testing SQLAlchemy apps."""
 
-from sqlalchemy import Column, Integer, Unicode, create_engine
+from sqlalchemy import Column, Integer, String, Unicode, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -17,7 +17,15 @@ class StandardModel(Base):
     __tablename__ = 'StandardModelTable'
 
     id = Column(Integer(), primary_key=True)
-    foo = Column(Unicode(20))
+    foo = Column(String(20))
+
+
+class MultiFieldModel(Base):
+    __tablename__ = 'MultiFieldModelTable'
+
+    id = Column(Integer(), primary_key=True)
+    foo = Column(String(20))
+    slug = Column(String(20), unique=True)
 
 
 class NonIntegerPk(Base):
