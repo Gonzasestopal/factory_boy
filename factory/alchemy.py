@@ -65,9 +65,10 @@ class SQLAlchemyModelFactory(base.Factory):
                     (field, cls.__name__))
             key_fields[field] = kwargs.pop(field)
 
+        instance = session.query(model_class).filter_by(
+            *args, **key_fields).one_or_none()
+
         try:
-            instance = session.query(model_class).filter_by(
-                *args, **key_fields).one_or_none()
             if not instance:
                 instance = model_class(*args, **key_fields)
                 session.add(instance)
@@ -82,7 +83,7 @@ class SQLAlchemyModelFactory(base.Factory):
                 try:
                     instance = session.query(model_class).filter_by(
                         **get_or_create_params).one()
-                except NoResultFound as e:
+                except NoResultFound:
                     # Original params are not a valid lookup and triggered a create(),
                     # that resulted in an IntegrityError. Follow SQLAlchemy´s behavior.
                     raise e
