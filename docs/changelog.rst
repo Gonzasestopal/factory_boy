@@ -1,6 +1,14 @@
 ChangeLog
 =========
 
+3.1.0 (unreleased)
+------------------
+
+*New:*
+
+    - Add sqlalchemy get_or_create support
+
+
 3.0.0 (unreleased)
 ------------------
 
